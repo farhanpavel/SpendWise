@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRouter = require("./routes/userRoute");
+const taskRouter = require("./routes/taskRoute");
+const limitRouter = require("./routes/limitRoute");
 
 require("dotenv").config();
 const app = express();
@@ -21,6 +23,8 @@ app.listen(PORT, () => {
   console.log(`App is Listening On Port ${PORT}`);
 });
 app.use("/api/user", userRouter);
+app.use("/api/tasks", taskRouter);
+app.use("/api/limit", limitRouter);
 app.get("/", (req, res) => {
   res.send("hello");
 });

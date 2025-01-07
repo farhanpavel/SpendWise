@@ -18,3 +18,13 @@ html {
 .hero-section {
   background-color: #f7faff;
 }
+.landing-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f0f4f4;
+}
+
+.content-area {
+  flex: 1;
+  padding: 2rem;
+}

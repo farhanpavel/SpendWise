@@ -1,0 +1,114 @@
+/* General container styles */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: red; /* New background color */
+  margin: 0;
+  padding: 0;
+}
+
+.form-container {
+  max-width: 550px;
+  margin: 50px auto;
+  background: #f0f4f4;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #d1d5db; /* New border color */
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column; /* Ensures form elements are stacked vertically */
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: left;
+}
+
+h3 {
+  font-size: 15px;
+  margin-bottom: 25px;
+  color: #555;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+  position: relative;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 12px;
+}
+
+input,
+select {
+  width: 60%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #d1d5db; /* New border color */
+  border-radius: 8px;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #f0f4f4; /* New background color for inputs */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #4caf50;
+}
+
+input:valid,
+select:valid {
+  border-color: #4caf50;
+}
+
+/* Submit button styles */
+.submit-btn {
+  width: 15%;
+  padding: 10px;
+  font-size: 0.8rem;
+  color: #fff;
+  background-color: #0054b3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: auto; /* Align button to the right */
+  align-self: flex-end; /* Align button to the end of the flex container */
+}
+
+.submit-btn:hover {
+  background-color: #003d80;
+}
+
+select option:disabled {
+  color: #999; /* Placeholder text color */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 20px 25px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  input,
+  select {
+    font-size: 14px;
+    width: 100%; /* Ensure inputs take full width on small screens */
+  }
+}

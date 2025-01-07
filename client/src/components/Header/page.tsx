@@ -11,7 +11,9 @@ export default function Header() {
         </div>
 
         <div>
-          <button>Start</button>
+          <button>
+            <Link href="/userdashboard/overview">Start</Link>
+          </button>
         </div>
       </div>
     </div>

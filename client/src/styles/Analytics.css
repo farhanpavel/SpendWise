@@ -1,0 +1,177 @@
+/* Container styles */
+.analytics-table {
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.filter-input {
+  width: 30%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.set-limit-btn {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.set-limit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Table styles */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.custom-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.custom-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Row coloring based on status */
+.custom-table .success td {
+  color: green;
+  font-weight: bold;
+}
+
+.custom-table .processing td {
+  color: orange;
+  font-weight: bold;
+}
+
+.custom-table .failed td {
+  color: red;
+  font-weight: bold;
+}
+
+/* Dialog Overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.card-section {
+  display: flex;
+  gap: 5px;
+  text-align: center;
+}
+.card-section .first,
+.second,
+.third {
+  width: 50%;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: rgb(248, 248, 248);
+  box-shadow: white;
+  font-size: 0.4rem;
+}
+/* Dialog Box */
+.dialog-box {
+  background-color: #fff;
+  padding: 30px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-box h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dialog-field {
+  margin-bottom: 15px;
+}
+
+.dialog-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Ensure input and select fields have the same styling */
+.dialog-field input,
+.dialog-field select {
+  width: 100%;
+  padding: 10px; /* Same padding for both input and select */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  background-color: white;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.analytics-table .btn-handle button {
+  margin-left: 10px;
+}
+.cancel-btn,
+.save-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn:hover {
+  background-color: #aaa;
+}
