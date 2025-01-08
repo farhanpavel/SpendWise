@@ -12,7 +12,7 @@ export default function Header() {
         </div>
 
         <div>
-          <a href="/userdashboard/overview">
+          <a href="/userdashboard/analytics">
             <button>Start</button>
           </a>
         </div>

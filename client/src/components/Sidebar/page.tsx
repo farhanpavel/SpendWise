@@ -8,7 +8,6 @@ import { FiLogOut } from "react-icons/fi";
 import Image from "next/image";
 
 const navItems = [
-  { title: "Overview", href: "/userdashboard/overview", icon: <GrOverview /> },
   {
     title: "Analytics",
     href: "/userdashboard/analytics",
@@ -40,14 +39,6 @@ export default function Sidebar() {
             </Link>
           ))}
         </nav>
-
-        {/* <div className="sidebar-logout">
-          <button className="sidebar-logout-button">
-            <div className="sidebar-icon">
-              <FiLogOut />
-            </div>
-          </button>
-        </div> */}
       </div>
     </div>
   );
