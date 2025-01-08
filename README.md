@@ -32,6 +32,9 @@
 
 - At the start of a new day, users can enter fresh expenses and the app will track them separately, with data automatically categorized.
 
+#### Hover Tooltip for Spending Details:
+
+-  Display the purpose of each expense in a tooltip when hovering over table entries 
 
 
 ## 📁 Project Structure
@@ -145,6 +148,11 @@ nodemon app
 7. **Build for production**
 ```bash
 npm run build
+```
+7. **For Using The Deployment Version**
+```bash
+cd client/src/components/Url
+change the url="https://spendwise-je8f.onrender.com"
 ```
 
 ## 📝 Scripts
