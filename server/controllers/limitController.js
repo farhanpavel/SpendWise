@@ -30,8 +30,30 @@ const limitPost = async (req, res) => {
       .json({ message: "Error on limit post request", error: err.message });
   }
 };
-
+const limitGetByCategory = async (req, res) => {
+  try {
+    const taskData = await Limit.findOne({
+      category: req.params.name,
+      date: req.params.date,
+    });
+    res.status(200).json(taskData);
+  } catch (err) {
+    res.status(500).json("Error on user get request");
+  }
+};
+const limitGetByDate = async (req, res) => {
+  try {
+    const taskData = await Limit.find({
+      date: req.params.date,
+    });
+    res.status(200).json(taskData);
+  } catch (err) {
+    res.status(500).json("Error on user get request");
+  }
+};
 module.exports = {
   limitGet,
   limitPost,
+  limitGetByCategory,
+  limitGetByDate,
 };

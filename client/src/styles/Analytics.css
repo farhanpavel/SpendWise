@@ -90,21 +90,100 @@
   align-items: center;
   z-index: 1000;
 }
-.card-section {
+/* Container for all cards */
+.card-container {
   display: flex;
-  gap: 5px;
-  text-align: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
 }
-.card-section .first,
-.second,
-.third {
-  width: 50%;
-  padding: 20px;
+
+/* General card styling */
+.card {
+  flex: 1;
+  min-width: 150px;
   margin-bottom: 10px;
-  background-color: rgb(248, 248, 248);
-  box-shadow: white;
-  font-size: 0.4rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Titles */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Card content for dates */
+.card-content {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* List inside the card */
+.card-list {
+  margin-top: 10px;
+  text-align: left;
+}
+
+/* Individual items inside the card list */
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  padding: 4px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.card-item-label {
+  font-weight: bold;
+  color: #444;
+}
+
+.card-item-value {
+  font-weight: bold;
+}
+
+/* Card-specific customizations */
+.card-date {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.card-date .card-title,
+.card-date .card-content {
+  color: white;
+}
+
+.card-remaining {
+  background: linear-gradient(135deg, #28a745, #218838);
+}
+
+.card-remaining .card-title {
+  color: white;
+}
+
+.card-limits {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+
+.card-limits .card-title {
+  color: white;
+}
+
 /* Dialog Box */
 .dialog-box {
   background-color: #fff;
@@ -174,4 +253,14 @@
 
 .cancel-btn:hover {
   background-color: #aaa;
+}
+@media (max-width: 900px) {
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-direction: column;
+  }
 }

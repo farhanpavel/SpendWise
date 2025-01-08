@@ -67,10 +67,10 @@ select:focus {
   border-color: #4caf50;
 }
 
-input:valid,
+/* input:valid,
 select:valid {
   border-color: #4caf50;
-}
+}  */
 
 /* Submit button styles */
 .submit-btn {
@@ -78,7 +78,7 @@ select:valid {
   padding: 10px;
   font-size: 0.8rem;
   color: #fff;
-  background-color: #0054b3;
+  background-color: #0070f3;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -110,5 +110,8 @@ select option:disabled {
   select {
     font-size: 14px;
     width: 100%; /* Ensure inputs take full width on small screens */
+  }
+  .submit-btn {
+    width: 20%;
   }
 }

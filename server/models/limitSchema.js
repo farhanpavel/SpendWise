@@ -11,8 +11,8 @@ const limitSchema = mongoose.Schema({
   },
 
   date: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => new Date().toISOString().split("T")[0],
   },
 });
 module.exports = { limitSchema };

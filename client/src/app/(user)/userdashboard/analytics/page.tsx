@@ -2,33 +2,54 @@
 import React, { useEffect, useState } from "react";
 import "../../../../styles/Analytics.css";
 import { url } from "@/components/Url/page";
+import { useRouter } from "next/navigation";
 
-const AnalyticsTable = () => {
-  const [showDialog, setShowDialog] = useState(false);
-  const [limit, setLimit] = useState("");
-  const [category, setCategory] = useState("");
-  const [usedCategories, setUsedCategories] = useState([]);
-  const [tasks, setTasks] = useState([]); // To store task data from the API
+interface Task {
+  _id: string;
+  date: string;
+  category: string;
+  amount: number;
+  purpose?: string;
+}
+
+interface CategoryLimit {
+  category: string;
+  limit: number;
+}
+
+const AnalyticsTable: React.FC = () => {
+  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [limit, setLimit] = useState<string>(""); // limit as string because it's initially an empty string
+  const [category, setCategory] = useState<string>(""); // category as string for selecting from options
+  const [usedCategories, setUsedCategories] = useState<{
+    [key: string]: number;
+  }>({}); // usedCategories as a map of category name to limit
+  const [tasks, setTasks] = useState<Task[]>([]); // tasks as an array of Task objects
   const currentDate = new Date().toISOString().split("T")[0];
+  console.log(currentDate);
+  const router = useRouter();
 
   useEffect(() => {
     fetchUsedCategories();
     fetchTasks();
   }, []);
 
-  const fetchUsedCategories = async () => {
+  const fetchUsedCategories = async (): Promise<void> => {
     try {
-      const response = await fetch(`${url}/api/limit?date=${currentDate}`);
+      const response = await fetch(`${url}/api/limit/data/all/${currentDate}`);
       if (!response.ok) {
         throw new Error("Failed to fetch used categories");
       }
-      const data = await response.json();
 
-      // Create a mapping of category to limit for the current date
-      const categoryLimitMap = data.reduce((acc, item) => {
-        acc[item.category] = item.limit;
-        return acc;
-      }, {});
+      const data: CategoryLimit[] = await response.json();
+
+      const categoryLimitMap: { [key: string]: number } = data.reduce(
+        (acc: { [key: string]: number }, item: CategoryLimit) => {
+          acc[item.category] = item.limit;
+          return acc;
+        },
+        {} as { [key: string]: number } // Type the accumulator explicitly
+      );
 
       setUsedCategories(categoryLimitMap);
     } catch (error) {
@@ -36,30 +57,38 @@ const AnalyticsTable = () => {
     }
   };
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (): Promise<void> => {
     try {
-      const response = await fetch(`${url}/api/tasks`);
+      const response = await fetch(`${url}/api/tasks/data/all/${currentDate}`);
       if (!response.ok) {
         throw new Error("Failed to fetch tasks");
       }
-      const data = await response.json();
+      const data: Task[] = await response.json();
       setTasks(data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
   };
 
-  const handleSetLimit = () => {
+  const calculateRemaining = (category: string): number => {
+    const categoryLimit = usedCategories[category] || 0;
+    const categoryExpenses = tasks
+      .filter((task) => task.category === category)
+      .reduce((acc, task) => acc + task.amount, 0);
+    return categoryLimit - categoryExpenses;
+  };
+
+  const handleSetLimit = (): void => {
     setShowDialog(true);
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = (): void => {
     setShowDialog(false);
     setLimit("");
     setCategory("");
   };
 
-  const handleSaveLimit = async () => {
+  const handleSaveLimit = async (): Promise<void> => {
     if (!category || !limit) {
       alert("Please select a category and set a limit");
       return;
@@ -85,7 +114,7 @@ const AnalyticsTable = () => {
 
       alert("Success");
       fetchUsedCategories();
-      fetchTasks(); // Refresh tasks after saving
+      fetchTasks();
       handleDialogClose();
     } catch (error) {
       console.error("Error saving limit:", error);
@@ -104,40 +133,81 @@ const AnalyticsTable = () => {
           <button className="set-limit-btn" onClick={handleSetLimit}>
             Set Limit
           </button>
-          <button className="set-limit-btn">New</button>
+          <button
+            className="set-limit-btn"
+            onClick={() => {
+              router.push("/userdashboard/analytics/new");
+            }}
+          >
+            New
+          </button>
         </div>
       </div>
-      <div className="card-section">
-        <div className="first">
-          <h1>Today's Date</h1>
-          <h1>{currentDate}</h1>
+
+      <div className="card-container">
+        {/* Today's Date Section */}
+        <div className="card card-date">
+          <h2 className="card-title">Today's Date</h2>
+          <p className="card-content">{currentDate}</p>
         </div>
-        <div className="second">
-          <h1>Total Expense</h1>
-          <h1>
-            {tasks.reduce((acc, task) => acc + (task.amount || 0), 0)}{" "}
-            {/* Calculate total expense */}
-          </h1>
+
+        {/* Remaining Amount Section */}
+        <div className="card card-remaining">
+          <h2 className="card-title">Remaining Amount</h2>
+          <div className="card-list">
+            {[
+              "Groceries",
+              "Transportation",
+              "Healthcare",
+              "Utility",
+              "Charity",
+              "Miscellaneous",
+            ].map((cat) => {
+              const remaining = calculateRemaining(cat);
+              return (
+                <div key={cat} className="card-item">
+                  <span className="card-item-label">{cat}:</span>
+                  <span
+                    className={`card-item-value ${
+                      remaining < 0 ? "exceeded" : "within-limit"
+                    }`}
+                  >
+                    {usedCategories[cat]
+                      ? remaining >= 0
+                        ? remaining
+                        : "Limit Exceeded"
+                      : "Limit Not Set"}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className="third">
-          <h1>Limits</h1>
-          {[
-            "Groceries",
-            "Transportation",
-            "Healthcare",
-            "Utility",
-            "Charity",
-            "Miscellaneous",
-          ].map((cat) => (
-            <div key={cat}>
-              <h2>
-                {cat}: {usedCategories[cat] ? usedCategories[cat] : 0}{" "}
-                {/* Display limit for each category */}
-              </h2>
-            </div>
-          ))}
+
+        {/* Limits Section */}
+        <div className="card card-limits">
+          <h2 className="card-title">Limits</h2>
+          <div className="card-list">
+            {[
+              "Groceries",
+              "Transportation",
+              "Healthcare",
+              "Utility",
+              "Charity",
+              "Miscellaneous",
+            ].map((cat) => (
+              <div key={cat} className="card-item">
+                <span className="card-item-label">{cat}:</span>
+                <span className="card-item-value">
+                  {usedCategories[cat] || "Not Set"}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Tasks Table */}
       <table className="custom-table">
         <thead>
           <tr>
@@ -161,7 +231,7 @@ const AnalyticsTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="4" style={{ textAlign: "center" }}>
+              <td colSpan={3} style={{ textAlign: "center" }}>
                 No data available
               </td>
             </tr>
@@ -169,6 +239,7 @@ const AnalyticsTable = () => {
         </tbody>
       </table>
 
+      {/* Set Limit Dialog */}
       {showDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -196,7 +267,11 @@ const AnalyticsTable = () => {
                   "Charity",
                   "Miscellaneous",
                 ].map((cat) => (
-                  <option key={cat} value={cat} disabled={usedCategories[cat]}>
+                  <option
+                    key={cat}
+                    value={cat}
+                    disabled={usedCategories[cat] !== undefined} // Disabled if limit is set
+                  >
                     {cat}
                   </option>
                 ))}
