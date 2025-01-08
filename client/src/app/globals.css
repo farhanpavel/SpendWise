@@ -26,4 +26,6 @@ html {
 
 .content-area {
   flex: 1;
+  width: 70%;
+  padding: 0.5rem;
 }

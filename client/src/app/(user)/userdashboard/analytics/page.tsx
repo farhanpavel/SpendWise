@@ -27,7 +27,7 @@ const AnalyticsTable: React.FC = () => {
   const [usedCategories, setUsedCategories] = useState<{
     [key: string]: number;
   }>({});
-  // const [tasks, setTasks] = useState<Task[]>([]);
+  const [totalSpend, setTotalSpend] = useState(0);
   const currentDate = new Date().toISOString().split("T")[0];
   console.log(currentDate);
   const router = useRouter();
@@ -68,6 +68,9 @@ const AnalyticsTable: React.FC = () => {
         throw new Error("Failed to fetch tasks");
       }
       const data: Task[] = await response.json();
+      const totalAmount = data.reduce((acc, task) => acc + task.amount, 0);
+
+      setTotalSpend(totalSpend + totalAmount);
       dispatch(addTask(data));
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -79,6 +82,7 @@ const AnalyticsTable: React.FC = () => {
     const categoryExpenses = tasks
       .filter((task: Task) => task.category === category)
       .reduce((acc: number, task: Task) => acc + task.amount, 0);
+
     return categoryLimit - categoryExpenses;
   };
 
@@ -109,6 +113,11 @@ const AnalyticsTable: React.FC = () => {
       alert("Success");
       console.log(tasks);
       const updatedTasks = tasks.filter((task: Task) => task._id !== e);
+      const newTotalSpend = updatedTasks.reduce(
+        (acc, task) => acc + task.amount,
+        0
+      );
+      setTotalSpend(newTotalSpend);
       dispatch(addTask(updatedTasks));
     } catch (error) {
       console.error("Error deleting limit:", error);
@@ -172,9 +181,20 @@ const AnalyticsTable: React.FC = () => {
       </div>
 
       <div className="card-container">
-        <div className="card card-date">
-          <h2 className="card-title">Today&apos;s Date</h2>
-          <p className="card-content">{currentDate}</p>
+        <div className="card-divider">
+          <div className="card card-date">
+            <div>
+              <h2 className="card-title">Current Date</h2>
+              <p className="card-content">{currentDate}</p>
+            </div>
+          </div>
+
+          <div className="card card-expense">
+            <div>
+              <h2 className="card-title">Total Spending</h2>
+              <p className="card-content">{totalSpend}</p>
+            </div>
+          </div>
         </div>
 
         <div className="card card-remaining">

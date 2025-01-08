@@ -149,22 +149,40 @@
   font-weight: bold;
 }
 
+.card-divider {
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
 .card-date {
   background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
 }
-
-.card-date .card-title,
+.card-expense {
+  background: linear-gradient(135deg, #ff7f50, #ff5722);
+}
+.card-date .card-title {
+  color: white;
+  font-size: 0.7rem;
+}
 .card-date .card-content {
   color: white;
+  font-weight: 600;
 }
-
+.card-expense .card-title {
+  color: white;
+  font-size: 0.7rem;
+}
+.card-expense .card-content {
+  color: white;
+  font-weight: 600;
+}
 .card-remaining {
   background: linear-gradient(135deg, #28a745, #218838);
 }
 
 .card-remaining .card-title {
   color: white;
+  font-size: 0.7rem;
 }
 
 .card-limits {
@@ -173,6 +191,7 @@
 
 .card-limits .card-title {
   color: white;
+  font-size: 0.7rem;
 }
 
 .dialog-box {
@@ -285,5 +304,14 @@ button {
     justify-content: center;
     margin-top: 20px;
     flex-direction: column;
+  }
+}
+@media (max-width: 600px) {
+  .custom-table {
+    overflow-x: auto;
+    display: block;
+  }
+  .all-btn {
+    gap: 5px;
   }
 }
