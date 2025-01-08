@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import "../../styles/Home.css";
+
 export default function Header() {
   return (
     <div>
@@ -11,9 +12,9 @@ export default function Header() {
         </div>
 
         <div>
-          <button>
-            <Link href="/userdashboard/overview">Start</Link>
-          </button>
+          <a href="/userdashboard/overview">
+            <button>Start</button>
+          </a>
         </div>
       </div>
     </div>

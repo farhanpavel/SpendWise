@@ -1,7 +1,6 @@
-/* General container styles */
 body {
   font-family: "Roboto", sans-serif;
-  background-color: red; /* New background color */
+  background-color: red;
   margin: 0;
   padding: 0;
 }
@@ -13,10 +12,10 @@ body {
   padding: 30px 40px;
   border-radius: 12px;
   text-align: center;
-  border: 1px solid #d1d5db; /* New border color */
+  border: 1px solid #d1d5db;
   transition: transform 0.3s ease-in-out;
   display: flex;
-  flex-direction: column; /* Ensures form elements are stacked vertically */
+  flex-direction: column;
 }
 
 h1 {
@@ -34,7 +33,6 @@ h3 {
   text-align: left;
 }
 
-/* Form group styling */
 .form-group {
   margin-bottom: 25px;
   text-align: left;
@@ -54,11 +52,11 @@ select {
   width: 60%;
   padding: 12px;
   font-size: 16px;
-  border: 1px solid #d1d5db; /* New border color */
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   box-sizing: border-box;
   outline: none;
-  background-color: #f0f4f4; /* New background color for inputs */
+  background-color: #f0f4f4;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -67,12 +65,6 @@ select:focus {
   border-color: #4caf50;
 }
 
-/* input:valid,
-select:valid {
-  border-color: #4caf50;
-}  */
-
-/* Submit button styles */
 .submit-btn {
   width: 15%;
   padding: 10px;
@@ -83,8 +75,8 @@ select:valid {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-left: auto; /* Align button to the right */
-  align-self: flex-end; /* Align button to the end of the flex container */
+  margin-left: auto;
+  align-self: flex-end;
 }
 
 .submit-btn:hover {
@@ -92,10 +84,9 @@ select:valid {
 }
 
 select option:disabled {
-  color: #999; /* Placeholder text color */
+  color: #999;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .form-container {
     padding: 20px 25px;
@@ -109,7 +100,7 @@ select option:disabled {
   input,
   select {
     font-size: 14px;
-    width: 100%; /* Ensure inputs take full width on small screens */
+    width: 100%;
   }
   .submit-btn {
     width: 20%;

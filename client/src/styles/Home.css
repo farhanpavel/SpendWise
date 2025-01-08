@@ -3,11 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* Header */
 .Header-head {
   display: flex;
-  justify-content: space-around;
-  gap: 80%;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
 }
@@ -44,14 +43,11 @@ button {
   transition: background-color 0.3s ease;
   font-weight: 500;
 }
-button a {
-  text-decoration: none;
-  color: #fff;
-}
 
 button:hover {
   background-color: #005bb5;
 }
+
 /* hero Part */
 .hero-container {
   display: flex;

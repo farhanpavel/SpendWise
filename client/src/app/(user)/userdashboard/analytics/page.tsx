@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import "../../../../styles/Analytics.css";
 import { url } from "@/components/Url/page";
 import { useRouter } from "next/navigation";
-
+import { useSelector, useDispatch } from "react-redux";
+import { addTask } from "@/redux/slice/sliceForm.";
+import { RootState } from "@/redux/store/storeForm";
+import Cookies from "js-cookie";
 interface Task {
   _id: string;
   date: string;
@@ -19,16 +22,17 @@ interface CategoryLimit {
 
 const AnalyticsTable: React.FC = () => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
-  const [limit, setLimit] = useState<string>(""); // limit as string because it's initially an empty string
-  const [category, setCategory] = useState<string>(""); // category as string for selecting from options
+  const [limit, setLimit] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const [usedCategories, setUsedCategories] = useState<{
     [key: string]: number;
-  }>({}); // usedCategories as a map of category name to limit
-  const [tasks, setTasks] = useState<Task[]>([]); // tasks as an array of Task objects
+  }>({});
+  // const [tasks, setTasks] = useState<Task[]>([]);
   const currentDate = new Date().toISOString().split("T")[0];
   console.log(currentDate);
   const router = useRouter();
-
+  const tasks = useSelector((state: RootState) => state.counter.tasks);
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchUsedCategories();
     fetchTasks();
@@ -48,7 +52,7 @@ const AnalyticsTable: React.FC = () => {
           acc[item.category] = item.limit;
           return acc;
         },
-        {} as { [key: string]: number } // Type the accumulator explicitly
+        {} as { [key: string]: number }
       );
 
       setUsedCategories(categoryLimitMap);
@@ -64,7 +68,7 @@ const AnalyticsTable: React.FC = () => {
         throw new Error("Failed to fetch tasks");
       }
       const data: Task[] = await response.json();
-      setTasks(data);
+      dispatch(addTask(data));
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
@@ -73,8 +77,8 @@ const AnalyticsTable: React.FC = () => {
   const calculateRemaining = (category: string): number => {
     const categoryLimit = usedCategories[category] || 0;
     const categoryExpenses = tasks
-      .filter((task) => task.category === category)
-      .reduce((acc, task) => acc + task.amount, 0);
+      .filter((task: Task) => task.category === category)
+      .reduce((acc: number, task: Task) => acc + task.amount, 0);
     return categoryLimit - categoryExpenses;
   };
 
@@ -86,6 +90,29 @@ const AnalyticsTable: React.FC = () => {
     setShowDialog(false);
     setLimit("");
     setCategory("");
+  };
+  const handleDelete = async (e: string) => {
+    try {
+      const response = await fetch(`${url}/api/tasks/${e}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const { message } = await response.json();
+        alert(message || "Failed to delete the limit. Please try again.");
+        throw new Error("Failed to delete limit");
+      }
+
+      alert("Success");
+      console.log(tasks);
+      const updatedTasks = tasks.filter((task: Task) => task._id !== e);
+      dispatch(addTask(updatedTasks));
+    } catch (error) {
+      console.error("Error deleting limit:", error);
+    }
   };
 
   const handleSaveLimit = async (): Promise<void> => {
@@ -145,13 +172,11 @@ const AnalyticsTable: React.FC = () => {
       </div>
 
       <div className="card-container">
-        {/* Today's Date Section */}
         <div className="card card-date">
-          <h2 className="card-title">Today's Date</h2>
+          <h2 className="card-title">Today&apos;s Date</h2>
           <p className="card-content">{currentDate}</p>
         </div>
 
-        {/* Remaining Amount Section */}
         <div className="card card-remaining">
           <h2 className="card-title">Remaining Amount</h2>
           <div className="card-list">
@@ -184,7 +209,6 @@ const AnalyticsTable: React.FC = () => {
           </div>
         </div>
 
-        {/* Limits Section */}
         <div className="card card-limits">
           <h2 className="card-title">Limits</h2>
           <div className="card-list">
@@ -207,18 +231,18 @@ const AnalyticsTable: React.FC = () => {
         </div>
       </div>
 
-      {/* Tasks Table */}
       <table className="custom-table">
         <thead>
           <tr>
             <th>Date</th>
             <th>Category</th>
             <th>Expense</th>
+            <th>Operation</th>
           </tr>
         </thead>
         <tbody>
           {tasks.length > 0 ? (
-            tasks.map((task) => (
+            tasks.map((task: Task) => (
               <tr
                 key={task._id}
                 title={`Purpose: ${task.purpose || "No purpose provided"}`}
@@ -227,11 +251,32 @@ const AnalyticsTable: React.FC = () => {
                 <td>{task.date.substring(0, 10) || "N/A"}</td>
                 <td>{task.category || "N/A"}</td>
                 <td>{task.amount || "N/A"}</td>
+                <td className="all-btn">
+                  <a>
+                    <button
+                      className="edit-button"
+                      onClick={() => {
+                        Cookies.set("id", task._id);
+                        router.push("/userdashboard/analytics/edit");
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </a>
+                  <a>
+                    <button
+                      onClick={() => handleDelete(task._id)}
+                      className="delete-button"
+                    >
+                      Delete
+                    </button>
+                  </a>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={3} style={{ textAlign: "center" }}>
+              <td colSpan={4} style={{ textAlign: "center" }}>
                 No data available
               </td>
             </tr>
@@ -239,7 +284,6 @@ const AnalyticsTable: React.FC = () => {
         </tbody>
       </table>
 
-      {/* Set Limit Dialog */}
       {showDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -270,7 +314,7 @@ const AnalyticsTable: React.FC = () => {
                   <option
                     key={cat}
                     value={cat}
-                    disabled={usedCategories[cat] !== undefined} // Disabled if limit is set
+                    disabled={usedCategories[cat] !== undefined}
                   >
                     {cat}
                   </option>

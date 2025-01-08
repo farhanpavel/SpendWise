@@ -1,9 +1,12 @@
 import React from "react";
+import "../../../../styles/Overview.css";
 
-export default function overview() {
+export default function Overview() {
   return (
-    <div>
-      <h1>Hello</h1>
-    </div>
+    <section className="overview-section">
+      <div className="container">
+        <h1 className="welcome-title">Welcome To SpendWise</h1>
+      </div>
+    </section>
   );
 }
