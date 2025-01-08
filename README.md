@@ -117,7 +117,7 @@ LICENSE
 
 1. **Clone the repository**
 ```bash
-git clone [https://github.com/farhanpavel/Ena-Ema-task]
+git clone [https://github.com/farhanpavel/SpendWise]
 ```
 
 2. **Install dependencies in Both client & Server Folder**
