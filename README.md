@@ -1,6 +1,7 @@
 # SpendWise Ena-Ema Task
 
 > Created by Farhan Pavel
+> 
 > SpendWise is a cutting-edge expense tracking platform crafted with Next.js, designed to offer an intuitive and organized way to manage your finances. With SpendWise, users can effortlessly track daily expenses, set personalized spending limits, and receive detailed financial summaries. Combining streamlined budgeting with categorized expense tracking and real-time alerts, SpendWise empowers you to take control of your finances and make informed, smarter decisions for a financially secure future.
 
 ![image](https://github.com/user-attachments/assets/ae363b69-dfd8-42bd-ab63-f023f142a7ef)
