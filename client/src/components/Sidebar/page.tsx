@@ -28,7 +28,7 @@ export default function Sidebar() {
         onMouseLeave={() => setIsSidebarOpen(false)}
       >
         <div className="sidebar-logo">
-          <Image src="/images/logo.png" width={50} height={50} alt="Logo" />
+          <Image src="/images/Logo.png" width={50} height={50} alt="Logo" />
         </div>
 
         <nav className="sidebar-nav">
