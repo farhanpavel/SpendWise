@@ -127,8 +127,13 @@ git clone [https://github.com/farhanpavel/SpendWise]
 ```bash
 npm install
 ```
+3. **Change The Url In client Folder**
+```bash
+cd client/src/components/Url
+change the url="https://localhost:4000"
+```
 
-3. **Set up environment variables in Server Folder**
+4. **Set up environment variables in Server Folder**
 Create a `.env` file with the following variables:
 
 ```env
@@ -137,11 +142,11 @@ DATABASE_URL="mongodb://localhost:27017/expense"
 PORT=4000
 ```
 
-4. **Run the development server in client folder by**
+5. **Run the development server in client folder by**
 ```bash
 npm run dev
 ```
-5. **Run the Database in server folder by**
+6. **Run the Database in server folder by**
  ```bash
 nodemon app
 ```
@@ -149,11 +154,7 @@ nodemon app
 ```bash
 npm run build
 ```
-7. **For Using The Deployment Version**
-```bash
-cd client/src/components/Url
-change the url="https://spendwise-je8f.onrender.com"
-```
+
 
 ## 📝 Scripts
 
