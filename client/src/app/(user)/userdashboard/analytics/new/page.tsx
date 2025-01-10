@@ -30,7 +30,7 @@ export default function NewTask() {
   const fetchCategoryLimit = async (category: string, date: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/limit/${category}/${date}`
+        `${url}/api/limit/${category}/${date}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch category limit");
@@ -46,7 +46,7 @@ export default function NewTask() {
   const fetchCategoryTasks = async (category: string, date: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/tasks/${category}/${date}`
+        `${url}/api/tasks/${category}/${date}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch category tasks");
