@@ -1,1 +1,1 @@
-export const url = "https://spendwise-je8f.onrender.com";
+export const url = "https://server-site-orcin.vercel.app";
